@@ -78,19 +78,35 @@
             let name = $('#name').val();
             let address = $('#address').val();
             let size = $('#size').val();
-            $.ajax({
-                type: 'POST',
-                url: '/mars',
-                data: {
-                    name_give: name,
-                    address_give: address,
-                    size_give: size,
-                },
-                success: function (response) {
-                    alert(response['msg'])
-                    window.location.reload();
-                }
-            });
+            if (!name && !address && !size) {
+                alert("Please fill out your name, address and acres!");
+            } else if (!name && !address) {
+                alert("Please fill out your name and address!");
+            } else if (!name && !size) {
+                alert("Please fill out your name and acres!");
+            } else if (!address && !size) {
+                alert("Please fill out your address and acres!");
+            } else if (!name) {
+                alert("Please fill out your name!");
+            } else if (!address) {
+                alert("Please fill out your address!");
+            } else if (!size) {
+                alert("Please fill out your acres!");
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/mars',
+                    data: {
+                        name_give: name,
+                        address_give: address,
+                        size_give: size,
+                    },
+                    success: function (response) {
+                        alert(response['msg'])
+                        window.location.reload();
+                    }
+                });
+            }
         }
     </script>
 </head>
@@ -115,7 +131,7 @@
                 <div class="mb-3 input-group">
                     <label class="input-group-text" for="size">Acres</label>
                     <select class="form-select" id="size">
-                        <option selected>-- Select acreage --</option>
+                        <option selected disabled>-- Select acreage --</option>
                         <option value="10">10 acres</option>
                         <option value="20">20 acres</option>
                         <option value="30">30 acres</option>
